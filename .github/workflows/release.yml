@@ -14,8 +14,6 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: rluisr/ecssc
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to ghcr.io
@@ -33,5 +31,4 @@ jobs:
           platforms: linux/amd64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          labels: ${{ steps.docker_meta.outputs.labels }}

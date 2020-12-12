@@ -4,6 +4,10 @@ ecssc(ECS State Check) is a Lambda function for notification to Slack if the ECS
 
 ![image](https://f.easyuploader.app/eu-prd/upload/20201213005728_6f5264366f3754797957.png)
 
+Download
+---------
+See [GitHub Container Registry](https://github.com/users/rluisr/packages/container/ecssc/versions)
+
 Installation
 -------------
 ecssc is a Lambda function of EventBridge event target.

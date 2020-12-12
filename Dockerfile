@@ -11,7 +11,6 @@ FROM public.ecr.aws/lambda/provided:al2
 LABEL maintainer="rluisr" \
   org.opencontainers.image.url="https://github.com/rluisr/ecssc" \
   org.opencontainers.image.source="https://github.com/rluisr/ecssc"
-  org.opencontainers.image.vendor="rluisr" \
   org.opencontainers.image.title="ecssc" \
   org.opencontainers.image.description="ecssc(ECS State Check) is a Lambda function for notification to Slack if the ECS task event is changed." \
   org.opencontainers.image.licenses="WTFPL"

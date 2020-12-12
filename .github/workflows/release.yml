@@ -13,7 +13,7 @@ jobs:
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v1
         with:
-          images: rluisr/ecssc
+          images: ghcr.io/${{ github.repository_owner }}/ecssc
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to ghcr.io

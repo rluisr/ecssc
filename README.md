@@ -14,10 +14,12 @@ ecssc is a Lambda function of EventBridge event target.
 
 ![image](https://f.easyuploader.app/eu-prd/upload/20201213011250_374537644f5a66646969.png)
 
+**Copy the container image to your ECR repository.**  
+The Lambda does not support third-party container registry.
+
 This is an example for setting up EventBridge with Terraform.
 
-EventBridge
------------
+EventBridge:
 ```hcl
 resource "aws_cloudwatch_event_bus" "ecs-state-check" {
   name = "ecs-state-check"
@@ -39,8 +41,7 @@ EOF
 }
 ```
 
-Lambda
-------
+Lambda:
 ```hcl
 # ECR
 resource "aws_ecr_repository" "foo" {
@@ -93,7 +94,7 @@ EOF
 # Lambda
 resource "aws_lambda_function" "ecs-state-check" {
   function_name = "ecs-state-check"
-  image_uri = ""
+  image_uri = "to your ecr image uri"
   package_type = "Image"
   role = module.ecs-state-check_lambda_execution_role.arn
 }

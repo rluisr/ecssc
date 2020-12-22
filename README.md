@@ -2,7 +2,7 @@ ecssc
 ======
 ecssc(ECS State Check) is a Lambda function for notification to Slack if the ECS task event is changed.
 
-![image](https://f.easyuploader.app/eu-prd/upload/20201222214633_4a564a6d775575304b7743744b335232.png)
+![image](https://f.easyuploader.app/eu-prd/upload/20201222222339_667333354c6575474e73706277615335.png)
 
 Download
 ---------

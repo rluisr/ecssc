@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/ashwanthkumar/slack-go-webhook"
+	"github.com/aws/aws-sdk-go/aws/arn"
 	"github.com/aws/aws-sdk-go/service/ecs"
+	"os"
 	"strconv"
 )
 
@@ -19,11 +21,37 @@ func generateSlackPayload(containerName, desiredStatus, lastStatus string, descr
 		}
 	}
 
+	if exitCode == 0 {
+		os.Exit(0)
+	}
+
+	clusterArn, err := arn.Parse(*describeTasks.Tasks[0].ClusterArn)
+	if err != nil {
+		panic(err)
+	}
+
+	taskArn, err := arn.Parse(*describeTasks.Tasks[0].TaskArn)
+	if err != nil {
+		panic(err)
+	}
+
 	attachment := slack.Attachment{}
 	attachment.AddField(slack.Field{
-		Title: "Container Name",
-		Value: containerName,
+		Title: "Cluster",
+		Value: clusterArn.Resource,
 		Short: false,
+	}).AddField(slack.Field{
+		Title: "Task",
+		Value: taskArn.Resource,
+		Short: false,
+	}).AddField(slack.Field{
+		Title: "Container",
+		Value: containerName,
+		Short: true,
+	}).AddField(slack.Field{
+		Title: "Exit Code",
+		Value: strconv.FormatInt(exitCode, 10),
+		Short: true,
 	}).AddField(slack.Field{
 		Title: "Desired Status",
 		Value: desiredStatus,
@@ -36,10 +64,6 @@ func generateSlackPayload(containerName, desiredStatus, lastStatus string, descr
 		Title: "Reason",
 		Value: reason,
 		Short: false,
-	}).AddField(slack.Field{
-		Title: "Exit Code",
-		Value: strconv.FormatInt(exitCode, 10),
-		Short: false,
 	})
 
 	color := "danger"
@@ -51,7 +75,7 @@ func generateSlackPayload(containerName, desiredStatus, lastStatus string, descr
 	attachment.AuthorLink = &authorLink
 
 	return slack.Payload{
-		Text:        fmt.Sprintf("The container *%s* state is *%s*", containerName, lastStatus),
+		Text:        fmt.Sprintf("The container *%s* state is *%s* | <!channel>", containerName, lastStatus),
 		Username:    "ecs-state-check",
 		Channel:     env.SlackChannelName,
 		Attachments: []slack.Attachment{attachment},

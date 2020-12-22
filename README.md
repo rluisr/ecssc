@@ -59,7 +59,7 @@ resource "aws_cloudwatch_log_group" "ecs-state-check" {
   retention_in_days = 14
 }
 
-# IAM for Lambda
+# IAM role for Lambda
 module "ecs-state-check_lambda_execution_role" {
   source  = "baikonur-oss/iam-nofile/aws"
   version = "v2.0.0"
@@ -85,6 +85,13 @@ module "ecs-state-check_lambda_execution_role" {
         "ssm:GetParametersByPath"
       ],
       "Resource": "arn:aws:ssm:${data.aws_region.region.name}:${data.aws_caller_identity.caller.account_id}:parameter${var.parameter_store_path}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecs:Describe*"
+      ],
+      "Resource": "*"
     }
   ]
 }
@@ -112,6 +119,7 @@ Environment Variables
 ----------------------
 | Name                         | Description                                        | Required |
 |------------------------------|----------------------------------------------------|----------|
+| ECSSC_DEBUG                  | Show debug message. default: false                 | no       |
 | ECSSC_IGNORE_CONTAINER_NAMES | Skip container names. Support array like app1,app2 | no       |
 | ECSSC_SLACK_CHANNEL_NAME     | Slack channel name like '#test'                    | yes      |
 | ECSSC_SLACK_WEBHOOK_URL      | Slack incoming webhook URL                         | yes      |

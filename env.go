@@ -5,6 +5,7 @@ import (
 )
 
 type Env struct {
+	Debug                bool     `default:"false"`
 	IgnoreContainerNames []string `split_words:"true"`
 	SlackWebhookURL      string   `required:"true" split_words:"true"`
 	SlackChannelName     string   `required:"true" split_words:"true"`
@@ -13,7 +14,7 @@ type Env struct {
 	SlackIconEmoji       string   `split_words:"true"`
 }
 
-func getConfig() Env {
+func getEnv() Env {
 	var e Env
 	err := envconfig.Process("ecssc", &e)
 	if err != nil {

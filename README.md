@@ -2,7 +2,7 @@ ecssc
 ======
 ecssc(ECS State Check) is a Lambda function for notification to Slack if the ECS task event is changed.
 
-![image](https://f.easyuploader.app/eu-prd/upload/20201213005728_6f5264366f3754797957.png)
+![image](https://f.easyuploader.app/eu-prd/upload/20201222214633_4a564a6d775575304b7743744b335232.png)
 
 Download
 ---------
@@ -17,7 +17,7 @@ ecssc is a Lambda function of EventBridge event target.
 **Copy the container image to your ECR repository.**  
 The Lambda does not support third-party container registry.
 
-This is an example for setting up EventBridge with Terraform.
+This is an example for setting up EventBridge and Lambda with Terraform.
 
 EventBridge:
 ```hcl
